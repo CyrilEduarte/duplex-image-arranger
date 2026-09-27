@@ -1,92 +1,45 @@
-# 🖨️ Duplex A4 Image Arranger & Imposition Tool
+# 🖨️ Duplex A4 Image Arranger
 
-A high-resolution, print-ready imposition utility built with **Streamlit**, **ReportLab**, and **Pillow**. This application automates the layout of image and PDF assets into double-sided (duplex) A4 grids with precise alignment, CMYK color preservation, and automated back-side column mirroring.
-
----
-
-## ✨ Features
-
-* **Dual Imposition Modes:**
-  * **Mode A: Repeater (Batch)** — Duplicates individual assets across full-page grids. Ideal for high-volume runs of identical business cards, badges, or tags.
-  * **Mode B: Sequential** — Arranges multi-image sequences across consecutive grid slots in strict order.
-* **Smart Duplex Alignment:** Automatically flips column positions on back pages so front and back graphics align when printed double-sided along the long edge.
-* **CMYK & Print-Safe:**
-  * Preserves native CMYK channels using uncompressed JPEG encoding.
-  * Maintains embedded ICC profiles.
-  * Bypasses standard image size constraints (`DecompressionBombError`) for ultra-high-resolution assets.
-* **Flexible Page Layouts:**
-  * Choose between **4-row** or **5-row** grids (2 columns per page).
-  * Fine-tune positioning with millimeter-level **X and Y offset controls**.
-  * Customizable target DPI (72 to 1200 DPI).
-* **Multi-Format Input:** Accepts `.jpg`, `.jpeg`, `.png`, `.tif`, `.tiff`, and `.pdf` files.
+A high-precision print imposition and layout application built with Streamlit and ReportLab. This tool converts image sequences and batch assets into print-ready, double-sided (duplex) A4 PDF documents with automatic grid positioning, column mirroring, and color profile preservation.
 
 ---
 
-## 🛠️ Project Structure
+## ✨ Key Features
 
-```text
-├── app.py              # Main Streamlit application
-├── requirements.txt    # Python dependencies
-├── packages.txt        # System-level dependencies for Streamlit Cloud (Poppler)
-└── README.md           # Project documentation
-```
+### 🔄 Dual Imposition Modes
+* **Mode A: Repeater (Batch Mode)**
+  * Fills an entire page grid (8 or 10 slots) with copies of a single front image.
+  * Processes multiple images in batch, outputting consolidated front and back PDF sets.
+  * Supports repeating a single uniform back design or assigning sequential backs across grid slots.
+* **Mode B: Sequential Mode**
+  * Arranges an ordered sequence of distinct images across continuous page grids.
+  * Pairs ordered front image sequences with either a static repeating back image or a matching sequence of unique back designs.
 
----
+### 📐 Precision Layout & Duplex Alignment
+* **Automatic Back-Side Mirroring:** Automatically flips column positioning on back pages so front and back cards align perfectly when printed and turned along the long edge.
+* **Custom Grid Rows:** Choose between **4 rows** (8 cards per page) or **5 rows** (10 cards per page) on standard A4 dimensions ($92.7 \text{ mm} \times 56.7 \text{ mm}$ per slot).
+* **Millimetric Offset Adjustments:** Fine-tune horizontal ($X$) and vertical ($Y$) grid positioning in millimeters to compensate for printer alignment drift.
+* **Batch Merging:** Option to merge multiple generated batch pages into unified master Front and Back PDF files or export them as individual files.
 
-## 🚀 Quick Start (Local Run)
-
-### 1. Prerequisites
-Ensure you have **Python 3.8+** installed. You will also need **Poppler** installed on your system for PDF processing:
-* **macOS:** `brew install poppler`
-* **Ubuntu/Debian:** `sudo apt-get install -y poppler-utils`
-* **Windows:** Download Poppler binaries and add the `bin` directory to your System PATH.
-
-### 2. Installation
-Clone the repository and install the dependencies:
-
-```bash
-git clone https://github.com/YOUR-USERNAME/YOUR-REPOSITORY-NAME.git
-cd YOUR-REPOSITORY-NAME
-pip install -r requirements.txt
-```
-
-### 3. Run the App
-Launch the Streamlit web interface:
-
-```bash
-streamlit run app.py
-```
-
-The application will automatically open in your default browser at `http://localhost:8501`.
+### 🎨 Print & Color Safe
+* **CMYK Color Preservation:** Automatically detects CMYK color spaces and applies uncompressed JPEG encoding to preserve native CMYK channels without forcing RGB conversions.
+* **ICC Metadata Support:** Preserves embedded color profiles across processed assets.
+* **High-Resolution Bypass:** Relaxes default pixel bounds (`DecompressionBombError`) to seamlessly render 300+ DPI print graphics.
 
 ---
 
-## ☁️ Deploying to Streamlit Community Cloud
+## 📄 Supported File Types
 
-1. Push your code, `requirements.txt`, and `packages.txt` to a **public GitHub repository**.
-2. Go to **[share.streamlit.io](https://share.streamlit.io/)** and sign in with GitHub.
-3. Click **Deploy an app**, select your repository, set the main file path to `app.py`, and click **Deploy**.
-
----
-
-## 📋 Requirements
-
-### Python (`requirements.txt`)
-```text
-streamlit
-Pillow
-reportlab
-PyPDF2
-pdf2image
-```
-
-### System (`packages.txt`)
-```text
-poppler-utils
-```
+| Asset Type | Supported Formats | Color Profile Handling |
+| :--- | :--- | :--- |
+| **Images** | `.jpg`, `.jpeg`, `.png`, `.tif`, `.tiff` | CMYK (JPEG/TIFF) & RGB (PNG/JPEG) |
+| **Documents** | `.pdf` (Single or multi-page) | Rasterized at target DPI |
 
 ---
 
-## 📄 License
+## ⚙️ Configurable Options
 
-This project is open-source and available under the [MIT License](LICENSE).
+* **Target DPI:** Adjust output resolution (72 to 1200 DPI; default is 300 DPI).
+* **Grid Selection:** Toggle between 4-row ($2 \times 4$) and 5-row ($2 \times 5$) page grids.
+* **Margins & Shifts:** Independent $X$-offset and $Y$-offset controls in millimeter increments.
+* **Back-Side Logic:** Toggle back-side generation on/off, and select between uniform repeat or sequential pairing modes.
